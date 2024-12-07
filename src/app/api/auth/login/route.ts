@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 		const formData: {
 			email: string;
 			password: string;
-			role: "employer" | "seeker";
+			role: "employer" | "applicant";
 		} = await request.json();
 
 		// Определение таблицы в зависимости от роли

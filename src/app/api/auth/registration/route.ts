@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 			name: string;
 			email: string;
 			password: string;
-			role: "employer" | "seeker";
+			role: "employer" | "applicant";
 		} = await request.json();
 
 		// Общие данные для создания пользователя
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 		let user;
 		if (formData.role === "employer") {
 			user = await prisma.employer.create({ data: userData });
-		} else if (formData.role === "seeker") {
+		} else if (formData.role === "applicant") {
 			user = await prisma.applicant.create({
 				data: { ...userData, status: "inactive" },
 			});

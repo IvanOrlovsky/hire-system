@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const authedRoutes = ["/"];
+const authedRoutes = ["/employer", "/applicant"];
 const notAuthedRoutes = ["/login", "/registration"];
 const applicantsRoutes = [""];
 const employerRoutes = [""];
@@ -30,12 +30,28 @@ export async function middleware(request: NextRequest) {
 
 	// Если соискатель пытается зайти на маршруты для работодателя, то возвращаем домой
 	if (isEmployerRoute && role === "applicant") {
-		return NextResponse.redirect(new URL("/", request.nextUrl));
+		return NextResponse.redirect(
+			new URL(`/applicant/vacancies/${userId}`, request.nextUrl)
+		);
 	}
 
 	// Если работодатель пытается зайти на маршруты для соискателя, то возвращаем домой
 	if (isApplicantRoute && role === "employer") {
-		return NextResponse.redirect(new URL("/", request.nextUrl));
+		return NextResponse.redirect(
+			new URL(`/employer/works/${userId}`, request.nextUrl)
+		);
+	}
+
+	// Если пользователь хочет зайти на главную, то в зависимости от роли переводим его на другие страницы
+	if (request.nextUrl.pathname === "/") {
+		if (role === "applicant") {
+			return NextResponse.redirect(
+				new URL(`/applicant/vacancies/${userId}`, request.nextUrl)
+			);
+		}
+		return NextResponse.redirect(
+			new URL(`/employer/works/${userId}`, request.nextUrl)
+		);
 	}
 
 	// Если нет условий для редиректа, пропускаем запрос дальше

@@ -5,7 +5,6 @@ import { Tabs, Form, Input, Button } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
-import { isApplicant, isEmployer } from "@/lib/utils";
 import Link from "next/link";
 import { setCookie } from "cookies-next";
 import { Toaster, toast } from "react-hot-toast";
@@ -13,7 +12,7 @@ import type { TabsProps } from "antd";
 
 export default function RegistrationPage() {
 	const [loading, setLoading] = useState(false);
-	const [tab, setTab] = useState<"seeker" | "employer">("seeker");
+	const [tab, setTab] = useState<"applicant" | "employer">("applicant");
 	const router = useRouter();
 
 	const onFinish = async (values: {
@@ -53,7 +52,7 @@ export default function RegistrationPage() {
 
 	const items: TabsProps["items"] = [
 		{
-			key: "seeker",
+			key: "applicant",
 			label: "Я соискатель",
 			children: (
 				<RegistrationForm loading={loading} onFinish={onFinish} />
@@ -88,9 +87,11 @@ export default function RegistrationPage() {
 					}}
 				>
 					<Tabs
-						defaultActiveKey="seeker"
+						defaultActiveKey="applicant"
 						items={items}
-						onChange={(key) => setTab(key as "seeker" | "employer")}
+						onChange={(key) =>
+							setTab(key as "applicant" | "employer")
+						}
 					/>
 				</div>
 			</div>

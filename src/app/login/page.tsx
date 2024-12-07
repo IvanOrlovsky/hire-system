@@ -13,7 +13,7 @@ import { isApplicant, isEmployer } from "@/lib/utils";
 
 export default function LoginPage() {
 	const [loading, setLoading] = useState(false);
-	const [tab, setTab] = useState<"seeker" | "employer">("seeker");
+	const [tab, setTab] = useState<"applicant" | "employer">("applicant");
 	const router = useRouter();
 
 	const onFinish = async (values: { email: string; password: string }) => {
@@ -53,7 +53,7 @@ export default function LoginPage() {
 
 	const items: TabsProps["items"] = [
 		{
-			key: "seeker",
+			key: "applicant",
 			label: "Я соискатель",
 			children: <LoginForm loading={loading} onFinish={onFinish} />,
 		},
@@ -87,9 +87,11 @@ export default function LoginPage() {
 						Вход в систему
 					</h1>
 					<Tabs
-						defaultActiveKey="seeker"
+						defaultActiveKey="applicant"
 						items={items}
-						onChange={(key) => setTab(key as "seeker" | "employer")}
+						onChange={(key) =>
+							setTab(key as "applicant" | "employer")
+						}
 					/>
 				</div>
 			</div>
