@@ -31,7 +31,7 @@ model Job {
   title       String
   description String
   vacancies   Vacancy[]
-  employer    Employer  @relation(fields: [employerId], references: [id])
+  employer    Employer  @relation(fields: [employerId], references: [id], onDelete: Cascade)
 }
 
 model Vacancy {
@@ -43,16 +43,16 @@ model Vacancy {
   status      String
   applications VacancyApplication[]
   tags        TagsOnVacancies[]
-  tests       Test[]
-  job         Job     @relation(fields: [jobId], references: [id])
+  test       Test?
+  job         Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
 
 model VacancyApplication {
   vacancyId   Int
   applicantId Int
   status      String
-  vacancy     Vacancy  @relation(fields: [vacancyId], references: [id])
-  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  vacancy     Vacancy  @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+  applicant   Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
 
   @@id([vacancyId, applicantId])
 }
@@ -66,22 +66,22 @@ model Tag {
 model TagsOnVacancies {
   tagId     Int
   vacancyId Int
-  tag       Tag     @relation(fields: [tagId], references: [id])
-  vacancy   Vacancy @relation(fields: [vacancyId], references: [id])
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  vacancy   Vacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
 
   @@id([tagId, vacancyId])
 }
 
 model Test {
   id          Int     @id @default(autoincrement())
-  vacancyId   Int
+  vacancyId   Int     @unique
   question    String
   option1     String
   option2     String
   option3     String
   option4     String
   correctAnswer Int  
-  vacancy     Vacancy @relation(fields: [vacancyId], references: [id])
+  vacancy     Vacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
 }
 
 model Resume {
@@ -89,5 +89,5 @@ model Resume {
   applicantId  Int
   personalInfo String
   workExperience String
-  applicant    Applicant @relation(fields: [applicantId], references: [id])
+  applicant    Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
 }
