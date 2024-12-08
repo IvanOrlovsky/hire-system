@@ -19,7 +19,11 @@ export async function GET(
 					tag: true,
 				},
 			},
-			test: true,
+			test: {
+				include: {
+					questions: true,
+				},
+			},
 		},
 	});
 

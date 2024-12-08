@@ -8,21 +8,22 @@ datasource db {
 }
 
 model Employer {
-  id      Int     @id @default(autoincrement())
-  name    String
-  email   String  @unique
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String  @unique
   password String
-  jobs    Job[]
+  jobs     Job[]
 }
 
 model Applicant {
-  id       Int       @id @default(autoincrement())
-  name     String
-  email    String    @unique
-  password String
-  status   String
-  resumes  Resume[]
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String    @unique
+  password     String
+  status       String
+  resumes      Resume[]
   applications VacancyApplication[]
+  testResults  ApplicantTestResult[]
 }
 
 model Job {
@@ -35,31 +36,32 @@ model Job {
 }
 
 model Vacancy {
-  id          Int     @id @default(autoincrement())
-  jobId       Int
-  salary      Int
-  title       String
-  description String
-  status      String
+  id           Int     @id @default(autoincrement())
+  jobId        Int
+  salary       Int
+  title        String
+  description  String
+  status       String
   applications VacancyApplication[]
-  tags        TagsOnVacancies[]
-  test       Test?
-  job         Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  tags         TagsOnVacancies[]
+  applicantTestResult ApplicantTestResult[]
+  test         Test?
+  job          Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
 
 model VacancyApplication {
-  vacancyId   Int
-  applicantId Int
-  status      String
-  vacancy     Vacancy  @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
-  applicant   Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  vacancyId    Int
+  applicantId  Int
+  status       String
+  vacancy      Vacancy  @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+  applicant    Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
 
   @@id([vacancyId, applicantId])
 }
 
 model Tag {
-  id    Int     @id @default(autoincrement())
-  name  String  @unique
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
   vacancies TagsOnVacancies[]
 }
 
@@ -73,21 +75,39 @@ model TagsOnVacancies {
 }
 
 model Test {
-  id          Int     @id @default(autoincrement())
-  vacancyId   Int     @unique
-  question    String
-  option1     String
-  option2     String
-  option3     String
-  option4     String
-  correctAnswer Int  
-  vacancy     Vacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+  id        Int       @id @default(autoincrement())
+  vacancyId Int       @unique
+  questions Question[]
+  vacancy   Vacancy   @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+}
+
+model Question {
+  id            Int    @id @default(autoincrement())
+  testId        Int
+  questionText  String
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  correctAnswer Int
+  test          Test   @relation(fields: [testId], references: [id], onDelete: Cascade)
+}
+
+model ApplicantTestResult {
+  id           Int     @id @default(autoincrement())
+  applicantId  Int
+  vacancyId    Int
+  score        Float   // Результат в процентах
+  applicant    Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  vacancy      Vacancy   @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+
+  @@unique([applicantId, vacancyId])
 }
 
 model Resume {
-  id           Int     @id @default(autoincrement())
-  applicantId  Int
-  personalInfo String
+  id            Int     @id @default(autoincrement())
+  applicantId   Int
+  personalInfo  String
   workExperience String
-  applicant    Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  applicant     Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
 }
