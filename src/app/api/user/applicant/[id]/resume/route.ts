@@ -93,6 +93,11 @@ export async function DELETE(
 				applicantId: +applicantId,
 			},
 		});
+
+		return NextResponse.json(
+			{ message: "Резюме успешно удалено" },
+			{ status: 200 }
+		);
 	} catch (err) {
 		console.error("Ошибка при удалении резюме \n " + err);
 		return NextResponse.json(

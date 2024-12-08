@@ -6,6 +6,7 @@ import {
 	Employer,
 	Job,
 	Question,
+	Resume,
 	Tag,
 	TagsOnVacancies,
 	Test,
@@ -79,31 +80,39 @@ export default function ApplicantVacancies({
 		{ questionId: number; answerNumber: number }[]
 	>([]);
 
+	const [resume, setResume] = useState<Resume | null>(null);
+
 	useEffect(() => {
 		fetchVacancies();
 	}, []);
 
 	const fetchVacancies = async () => {
-		const [notAccepted, accepted] = await Promise.all([
+		const [notAccepted, accepted, resume] = await Promise.all([
 			apiCall("get", `/api/vacancies/applicant/${applicantId}`),
 			apiCall(
 				"get",
 				`/api/vacancies/applicant/${applicantId}?areAccepted=yes`
 			),
+			apiCall("get", `/api/user/applicant/${applicantId}/resume`),
 		]);
 
 		setNotAcceptedVacancies(notAccepted.data);
 		setAcceptedVacancies(accepted.data);
+		setResume(resume.data);
 	};
 
 	const handleAcceptVacancy = async (vacancyId: string) => {
-		await apiCall(
-			"post",
-			`/api/vacancies/applicant/${applicantId}/accept`,
-			{ vacancyId }
-		);
-		toast.success("Отклик успешно оставлен!");
-		fetchVacancies();
+		if (resume) {
+			await apiCall(
+				"post",
+				`/api/vacancies/applicant/${applicantId}/accept`,
+				{ vacancyId }
+			);
+			toast.success("Отклик успешно оставлен!");
+			fetchVacancies();
+		} else {
+			toast.error("Для отклика по вакансии необходимо иметь резюме!");
+		}
 	};
 
 	const handleAcceptVacancyWithTest = async () => {
@@ -198,8 +207,14 @@ export default function ApplicantVacancies({
 			<Button
 				onClick={() => {
 					if (vacancy.test) {
-						setCurrentVacancy(vacancy);
-						setTestModalVisible(true);
+						if (resume) {
+							setCurrentVacancy(vacancy);
+							setTestModalVisible(true);
+						} else {
+							toast.error(
+								"Для отклика по вакансии необходимо иметь резюме!"
+							);
+						}
 					} else {
 						handleAcceptVacancy(vacancy.id.toString());
 					}
