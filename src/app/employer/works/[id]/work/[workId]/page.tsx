@@ -56,12 +56,14 @@ const QuestionManagementModal = ({
 	vacancy,
 	onAddQuestion,
 	onEditQuestion,
+	onDeleteQuestion,
 }: {
 	open: boolean;
 	onCancel: () => void;
 	vacancy: VacancyType | null;
 	onAddQuestion: (question: Omit<Question, "id">) => void;
 	onEditQuestion: (question: Question) => void;
+	onDeleteQuestion: (questionId: number) => void;
 }) => {
 	const [form] = Form.useForm();
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(
@@ -216,29 +218,48 @@ const QuestionManagementModal = ({
 					itemLayout="horizontal"
 					dataSource={vacancy?.test?.questions || []}
 					renderItem={(item) => (
-						<List.Item
-							actions={[
-								<Button
-									key="edit"
-									onClick={() => handleEdit(item.id)}
-								>
-									Редактировать
-								</Button>,
-							]}
-						>
-							<List.Item.Meta
-								title={item.questionText}
-								description={
-									item.option1 +
-									", " +
-									item.option2 +
-									", " +
-									item.option3 +
-									", " +
-									item.option4
-								}
-							/>
-						</List.Item>
+						<>
+							<List.Item
+								actions={[
+									<Button
+										key="edit"
+										onClick={() => {
+											handleEdit(item.id);
+											onCancel();
+										}}
+									>
+										Редактировать
+									</Button>,
+								]}
+							>
+								<List.Item.Meta
+									title={item.questionText}
+									description={
+										item.option1 +
+										", " +
+										item.option2 +
+										", " +
+										item.option3 +
+										", " +
+										item.option4
+									}
+								/>
+								<List.Item
+									actions={[
+										<Button
+											key="delete"
+											danger
+											onClick={() => {
+												onDeleteQuestion(item.id);
+												onCancel();
+											}}
+										>
+											Удалить
+										</Button>,
+									]}
+								></List.Item>
+							</List.Item>
+						</>
 					)}
 				/>
 			</div>
@@ -561,6 +582,7 @@ export default function WorkPage({
 				vacancy={selectedVacancy}
 				onAddQuestion={handleAddQuestion}
 				onEditQuestion={handleEditQuestion}
+				onDeleteQuestion={handleDeleteQuestion}
 			/>
 		</div>
 	);
