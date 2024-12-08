@@ -21,7 +21,7 @@ model Applicant {
   email        String    @unique
   password     String
   status       String
-  resumes      Resume[]
+  resumes      Resume?
   applications VacancyApplication[]
   testResults  ApplicantTestResult[]
 }
@@ -106,7 +106,7 @@ model ApplicantTestResult {
 
 model Resume {
   id            Int     @id @default(autoincrement())
-  applicantId   Int
+  applicantId   Int     @unique  
   personalInfo  String
   workExperience String
   applicant     Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)

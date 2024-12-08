@@ -36,12 +36,12 @@ export default function ApplicantSideBar() {
 
 	const applicantItems: MenuItem[] = [
 		{
-			label: "Список вакансий - главная",
+			label: "Список вакансий",
 			key: "vacancies",
 			onClick: () => router.push(`/applicant/vacancies/${id}`),
 		},
 		{
-			label: "Мои резюме",
+			label: "Моё резюме",
 			key: "my-resumes",
 			onClick: () => router.push(`/applicant/my-resumes/${id}`),
 		},
