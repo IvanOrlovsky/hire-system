@@ -18,14 +18,14 @@ export default function EmployerSideBar() {
 
 	const employerItems: MenuItem[] = [
 		{
-			label: "Работы - главная",
+			label: "Работы",
 			key: "works",
 			onClick: () => router.push(`/employer/works/${id}`),
 		},
 		{
-			label: "Профиль",
-			key: "profile",
-			onClick: () => router.push(`/employer/profile/${id}`),
+			label: "Отклики по вакансиям",
+			key: "vacancies-accept",
+			onClick: () => router.push(`/employer/vacancies-accept/${id}`),
 		},
 		{
 			label: "Аналитика",
