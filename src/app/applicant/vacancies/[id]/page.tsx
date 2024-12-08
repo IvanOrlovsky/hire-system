@@ -36,6 +36,27 @@ const apiCall = async (
 	}
 };
 
+const TagsDisplay = ({
+	tags,
+}: {
+	tags: ({ tag: Tag } & TagsOnVacancies)[];
+}) => (
+	<div className="my-2">
+		{tags && Array.isArray(tags) ? (
+			tags.map((tag) => (
+				<span
+					key={tag.tag.id}
+					className="px-2 py-1 bg-blue-500 text-white rounded mr-2"
+				>
+					{tag.tag.name}
+				</span>
+			))
+		) : (
+			<span className="text-gray-500">Теги отсутствуют</span>
+		)}
+	</div>
+);
+
 export default function ApplicantVacancies({
 	params,
 }: {
@@ -205,6 +226,8 @@ export default function ApplicantVacancies({
 					</p>
 					<p>Работа: {vacancy.job.title}</p>
 				</div>
+
+				<TagsDisplay tags={vacancy.tags} />
 
 				{!vacancyApplication && defaultBtn}
 				{vacancyApplication?.status === "pending" && pendingBtn}
