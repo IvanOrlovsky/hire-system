@@ -15,6 +15,7 @@ import {
 } from "@prisma/client";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Link from "next/link";
 
 type VacancyType = {
 	test: ({ questions: Question[] } & Test) | null;
@@ -203,6 +204,20 @@ export default function ApplicantVacancies({
 			</div>
 		);
 
+		const acceptBtn = (
+			<div className="flex flex-col gap-2">
+				<div className="p-3 text-white text-xl bg-green-600">
+					Поздравляем, работодатель принял ваш отклик!
+				</div>
+				<span className="text-xl">
+					Свяжитесь с работодателем:{" "}
+					<Link href={`mailto:${vacancy.job.employer.email}`}>
+						{vacancy.job.employer.email}
+					</Link>
+				</span>
+			</div>
+		);
+
 		const defaultBtn = (
 			<Button
 				onClick={() => {
@@ -248,6 +263,7 @@ export default function ApplicantVacancies({
 				{vacancyApplication?.status === "pending" && pendingBtn}
 				{vacancyApplication?.status === "failed" && failedBtn}
 				{vacancyApplication?.status === "rejected" && rejectedBtn}
+				{vacancyApplication?.status === "accepted" && acceptBtn}
 			</Card>
 		);
 	};

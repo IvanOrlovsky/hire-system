@@ -50,11 +50,6 @@ export default function ApplicantSideBar() {
 			key: "analytics",
 			onClick: () => router.push(`/applicant/analytics/${id}`),
 		},
-		{
-			label: "Профиль",
-			key: "profile",
-			onClick: () => router.push(`/applicant/profile/${id}`),
-		},
 	];
 
 	return (
