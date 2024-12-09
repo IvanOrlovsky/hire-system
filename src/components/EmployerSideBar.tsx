@@ -42,19 +42,13 @@ export default function EmployerSideBar() {
 		>
 			<div className="flex flex-col justify-between h-full">
 				<Menu theme="dark" mode="inline" items={employerItems} />
-				<EmployerSideBar.UserBar id={id as string} router={router} />
+				<UserBar id={id as string} router={router} />
 			</div>
 		</Sider>
 	);
 }
 
-EmployerSideBar.UserBar = ({
-	id,
-	router,
-}: {
-	id: string;
-	router: AppRouterInstance;
-}) => {
+const UserBar = ({ id, router }: { id: string; router: AppRouterInstance }) => {
 	const [user, setUser] = useState<{ name: string; email: string } | null>(
 		null
 	);

@@ -16,24 +16,6 @@ export default function ApplicantSideBar() {
 	const router = useRouter();
 	const id = getCookie("id")?.toString();
 
-	const employerItems: MenuItem[] = [
-		{
-			label: "Работы - главная",
-			key: "works",
-			onClick: () => router.push(`/employer/works/${id}`),
-		},
-		{
-			label: "Профиль",
-			key: "profile",
-			onClick: () => router.push(`/employer/profile/${id}`),
-		},
-		{
-			label: "Аналитика",
-			key: "analytics",
-			onClick: () => router.push(`/employer/analytics/${id}`),
-		},
-	];
-
 	const applicantItems: MenuItem[] = [
 		{
 			label: "Список вакансий",
@@ -60,19 +42,13 @@ export default function ApplicantSideBar() {
 		>
 			<div className="flex flex-col justify-between h-full">
 				<Menu theme="dark" mode="inline" items={applicantItems} />
-				<ApplicantSideBar.UserBar id={id as string} router={router} />
+				<UserBar id={id as string} router={router} />
 			</div>
 		</Sider>
 	);
 }
 
-ApplicantSideBar.UserBar = ({
-	id,
-	router,
-}: {
-	id: string;
-	router: AppRouterInstance;
-}) => {
+const UserBar = ({ id, router }: { id: string; router: AppRouterInstance }) => {
 	const [user, setUser] = useState<{ name: string; email: string } | null>(
 		null
 	);

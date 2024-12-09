@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const authedRoutes = ["/employer", "/applicant"];
 const notAuthedRoutes = ["/login", "/registration"];
 const applicantsRoutes = [""];
 const employerRoutes = [""];
@@ -11,7 +10,7 @@ export async function middleware(request: NextRequest) {
 	const role = request.cookies.get("role")?.value;
 
 	const path = request.nextUrl.pathname;
-	const isAuthedRoute = authedRoutes.includes(path);
+
 	const isNotAuthedRoute = notAuthedRoutes.includes(path);
 	const isApplicantRoute = applicantsRoutes.includes(path);
 	const isEmployerRoute = employerRoutes.includes(path);

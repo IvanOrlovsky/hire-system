@@ -77,7 +77,7 @@ export async function POST(
 		);
 	} catch (err) {
 		return NextResponse.json(
-			{ message: "Ошибка при добавлении вакансии!" },
+			{ message: "Ошибка при добавлении вакансии! \n" + err },
 			{ status: 500 }
 		);
 	}

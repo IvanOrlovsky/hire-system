@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, Card, Button, Modal, Form, Input, Select } from "antd";
+import { Tabs, Card, Button, Modal, Form, Select } from "antd";
 import { useState, useEffect } from "react";
 import {
 	Employer,

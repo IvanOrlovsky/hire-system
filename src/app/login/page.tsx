@@ -1,6 +1,5 @@
 "use client";
 
-import { Applicant, Employer } from "@prisma/client";
 import { Tabs, Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
@@ -9,7 +8,6 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 import Link from "next/link";
 import type { TabsProps } from "antd";
-import { isApplicant, isEmployer } from "@/lib/utils";
 
 export default function LoginPage() {
 	const [loading, setLoading] = useState(false);

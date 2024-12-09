@@ -34,7 +34,7 @@ export async function GET(
 		return NextResponse.json({ data: vacancies }, { status: 200 });
 	} catch (err) {
 		return NextResponse.json(
-			{ error: "Не удалось получить отклики по вакансиям" },
+			{ message: "Не удалось получить отклики по вакансиям \n" + err },
 			{ status: 500 }
 		);
 	}

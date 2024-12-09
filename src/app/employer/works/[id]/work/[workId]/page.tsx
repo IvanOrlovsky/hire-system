@@ -303,11 +303,7 @@ export default function WorkPage({
 	};
 
 	const handleAddVacancy = async (values: any) => {
-		const response = await apiCall(
-			"post",
-			`/api/vacancies/${workId}`,
-			values
-		);
+		await apiCall("post", `/api/vacancies/${workId}`, values);
 		fetchData();
 		fetchAllTags();
 		setNewVacancyModalOpen(false);
@@ -570,7 +566,11 @@ export default function WorkPage({
 				onCancel={() => setNewTestModalOpen(false)}
 				footer={null}
 			>
-				<Form onFinish={() => handleCreateTest(selectedVacancy?.id!)}>
+				<Form
+					onFinish={() =>
+						handleCreateTest(selectedVacancy?.id as number)
+					}
+				>
 					<Button type="primary" htmlType="submit" block>
 						Создать
 					</Button>

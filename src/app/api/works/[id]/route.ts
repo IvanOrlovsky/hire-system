@@ -52,7 +52,7 @@ export async function POST(
 		);
 	} catch (err) {
 		return NextResponse.json(
-			{ message: "Ошибка при добавлении работы" },
+			{ message: "Ошибка при добавлении работы \n" + err },
 			{ status: 500 }
 		);
 	}
@@ -64,7 +64,7 @@ export async function DELETE(
 ) {
 	const { id: workId } = params;
 
-	const deletedJob = await prisma.job.delete({
+	await prisma.job.delete({
 		where: {
 			id: +workId,
 		},
@@ -107,7 +107,7 @@ export async function PUT(
 		);
 	} catch (err) {
 		return NextResponse.json(
-			{ message: "Ошибка при обновлении работы" },
+			{ message: "Ошибка при обновлении работы\n" + err },
 			{ status: 500 }
 		);
 	}

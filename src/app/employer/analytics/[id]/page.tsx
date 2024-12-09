@@ -66,7 +66,6 @@ export default function EmployerAnalytics({
 	}
 
 	const {
-		totalJobs,
 		totalVacancies,
 		activeVacancies,
 		totalApplications,

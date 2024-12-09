@@ -139,6 +139,7 @@ export default function EmployerVacanciesAccept({
 								<List.Item
 									actions={[
 										<Button
+											key="ShowDetails"
 											onClick={() =>
 												showApplicantDetails(
 													application
@@ -148,6 +149,7 @@ export default function EmployerVacanciesAccept({
 											Посмотреть детали
 										</Button>,
 										<Button
+											key={"AcceptBtnq"}
 											onClick={() =>
 												handleAccept(
 													vacancy.id,
@@ -159,6 +161,7 @@ export default function EmployerVacanciesAccept({
 											Принять
 										</Button>,
 										<Button
+											key={"RejectBtnq"}
 											onClick={() =>
 												handleReject(
 													vacancy.id,

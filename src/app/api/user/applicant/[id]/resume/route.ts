@@ -1,5 +1,4 @@
 import prisma from "@/lib/db";
-import { Resume } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

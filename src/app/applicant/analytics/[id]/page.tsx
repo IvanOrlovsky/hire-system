@@ -45,7 +45,7 @@ export default function ApplicantAnalytics({
 
 	useEffect(() => {
 		fetchData();
-	}, [applicantId]);
+	}, [fetchData]);
 
 	if (loading) {
 		return (
