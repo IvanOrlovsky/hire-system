@@ -308,7 +308,8 @@ export default function WorkPage({
 			`/api/vacancies/${workId}`,
 			values
 		);
-		setVacancies((prev) => [...prev, response.data]);
+		fetchData();
+		fetchAllTags();
 		setNewVacancyModalOpen(false);
 		toast.success("Вакансия добавлена!");
 	};
@@ -388,7 +389,7 @@ export default function WorkPage({
 					Добавить вакансию
 				</Button>
 			</div>
-			{vacancies.length !== 0 && (
+			{vacancies && vacancies.length !== 0 && (
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 					{vacancies.map((vacancy) => (
 						<Card key={vacancy.id} title={vacancy.title}>
